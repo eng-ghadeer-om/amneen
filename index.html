@@ -8,6 +8,9 @@
 </head>
 <body>
 
+    <!-- ADDED: The geometric overlay div must exist for the JS to find it -->
+    <div id="geometric-overlay"></div>
+
     <main id="app-container">
         <h1>AMNEEN</h1>
         <p class="subtitle">Nothing is saved. Everything is temporary.</p>
@@ -22,42 +25,41 @@
             placeholder="What is on your mind? Type freely...">
         </textarea>
 
-        <button id="burn-btn">Release to the Canvas</button>
+        <!-- FIXED: Added onclick="initiateBurn()" -->
+        <button id="burn-btn" onclick="initiateBurn()">Release to the Canvas</button>
     </main>
 
     <footer id="sos-footer">
         <p>Need support? <a href="tel:24441999">Whispers of Serenity (Oman)</a></p>
     </footer>
 
- <script>
-function initiateBurn() {
-    const text = document.getElementById('canvas');
-    const pattern = document.getElementById('geometric-overlay');
-    const btn = document.getElementById('burn-btn');
-    const title = document.querySelector('h1');
-    const subtitle = document.querySelector('.subtitle');
+    <script>
+    function initiateBurn() {
+        const text = document.getElementById('canvas');
+        const pattern = document.getElementById('geometric-overlay');
+        const btn = document.getElementById('burn-btn');
+        const title = document.querySelector('h1');
+        const subtitle = document.querySelector('.subtitle');
 
-    // 1. Start the dissolve
-    text.classList.add('dissolving');
-    
-    // 2. Fade in the peace (geometric pattern)
-    pattern.classList.add('show-pattern');
+        // 1. Start the dissolve
+        text.classList.add('dissolving');
+        
+        // 2. Fade in the peace (geometric pattern)
+        pattern.classList.add('show-pattern');
 
-    // 3. Hide UI elements gently
-    btn.style.opacity = '0';
-    title.style.opacity = '0.3';
-    subtitle.innerText = "Breathe in... Breathe out...";
+        // 3. Hide UI elements gently
+        btn.style.opacity = '0';
+        title.style.opacity = '0.3';
+        subtitle.innerText = "Breathe in... Breathe out...";
 
-    // 4. THE PRIVACY CLEANSE
-    // After 4 seconds (when animation finishes), wipe the text 
-    // from the browser's memory entirely.
-    setTimeout(() => {
-        text.value = ""; 
-        text.style.display = "none";
-        btn.style.display = "none";
-        subtitle.innerText = "It is gone. You are safe.";
-    }, 4000);
-}
-</script>   
+        // 4. THE PRIVACY CLEANSE
+        setTimeout(() => {
+            text.value = ""; 
+            text.style.display = "none";
+            btn.style.display = "none";
+            subtitle.innerText = "It is gone. You are safe.";
+        }, 4000);
+    }
+    </script>   
 </body>
 </html>
