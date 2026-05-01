@@ -8,24 +8,27 @@
 </head>
 <body>
 
-    <!-- ADDED: The geometric overlay div must exist for the JS to find it -->
     <div id="geometric-overlay"></div>
+
+    <!-- NEW: Top bar for Discreet Mode -->
+    <header id="top-bar">
+        <button id="discreet-btn" onclick="toggleDiscreetMode()">Discreet Mode</button>
+    </header>
 
     <main id="app-container">
         <h1>AMNEEN</h1>
-        <p class="subtitle">Nothing is saved. Everything is temporary.</p>
+        <p class="subtitle" id="dynamic-subtitle">Nothing is saved. Everything is temporary.</p>
 
-        <!-- PRIVACY SHIELDED TEXT AREA -->
+        <!-- UPDATED: Clinical Copy Placeholder -->
         <textarea 
             id="canvas" 
             spellcheck="false" 
             autocomplete="off" 
             autocorrect="off" 
             autocapitalize="none" 
-            placeholder="What is on your mind? Type freely...">
+            placeholder="The canvas is yours. No one is watching, and nothing is saved. What is weighing on your heart right now?">
         </textarea>
 
-        <!-- FIXED: Added onclick="initiateBurn()" -->
         <button id="burn-btn" onclick="initiateBurn()">Release to the Canvas</button>
     </main>
 
@@ -34,30 +37,68 @@
     </footer>
 
     <script>
+    // --- 1. DISCREET MODE LOGIC ---
+    function toggleDiscreetMode() {
+        document.body.classList.toggle('discreet-mode');
+        const btn = document.getElementById('discreet-btn');
+        
+        if (document.body.classList.contains('discreet-mode')) {
+            btn.innerText = "Normal Mode";
+        } else {
+            btn.innerText = "Discreet Mode";
+        }
+    }
+
+    // --- 2. CBT SOMATIC PROMPT LOGIC ---
+    const canvas = document.getElementById('canvas');
+    const subtitle = document.getElementById('dynamic-subtitle');
+    let somaticTriggered = false;
+
+    // Listen to the user typing
+    canvas.addEventListener('input', () => {
+        // If they type more than 30 characters, trigger the CBT prompt gently
+        if (canvas.value.length > 30 && !somaticTriggered) {
+            subtitle.style.opacity = '0'; // Fade out current text
+            
+            setTimeout(() => {
+                subtitle.innerText = "Take a deep breath. Notice the tension in your shoulders. Exhale, and let it go with the words.";
+                subtitle.style.opacity = '1'; // Fade in new text
+            }, 1000);
+            
+            somaticTriggered = true; // Make sure it only happens once per visit
+        }
+    });
+
+    // --- 3. THE BURN LOGIC (From Day 2) ---
     function initiateBurn() {
-        const text = document.getElementById('canvas');
         const pattern = document.getElementById('geometric-overlay');
         const btn = document.getElementById('burn-btn');
-        const title = document.querySelector('h1');
-        const subtitle = document.querySelector('.subtitle');
 
-        // 1. Start the dissolve
-        text.classList.add('dissolving');
+        canvas.classList.add('dissolving');
         
-        // 2. Fade in the peace (geometric pattern)
-        pattern.classList.add('show-pattern');
+        if (pattern) pattern.classList.add('show-pattern');
 
-        // 3. Hide UI elements gently
-        btn.style.opacity = '0';
-        title.style.opacity = '0.3';
-        subtitle.innerText = "Breathe in... Breathe out...";
+        btn.style.pointerEvents = "none";
+        btn.style.opacity = "0";
+        subtitle.style.opacity = '0';
 
-        // 4. THE PRIVACY CLEANSE
         setTimeout(() => {
-            text.value = ""; 
-            text.style.display = "none";
+            subtitle.innerHTML = "Ready to let go? Watch your worries transform into something peaceful.";
+            subtitle.style.opacity = '1';
+        }, 1000);
+
+        setTimeout(() => {
+            canvas.value = ""; 
+            canvas.style.visibility = "hidden";
             btn.style.display = "none";
-            subtitle.innerText = "It is gone. You are safe.";
+            
+            subtitle.style.opacity = '0';
+            setTimeout(() => {
+                subtitle.innerHTML = "It is gone. <br><br> You are safe.";
+                subtitle.style.fontSize = "24px";
+                subtitle.style.marginTop = "50px";
+                subtitle.style.opacity = '1';
+            }, 500);
         }, 4000);
     }
     </script>   
