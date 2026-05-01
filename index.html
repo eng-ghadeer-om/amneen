@@ -10,8 +10,9 @@
 
     <div id="geometric-overlay"></div>
 
-    <!-- NEW: Top bar for Discreet Mode -->
+<!-- Top bar for Controls -->
     <header id="top-bar">
+        <button id="panic-btn" onclick="emergencyClear()">Quick Clear</button>
         <button id="discreet-btn" onclick="toggleDiscreetMode()">Discreet Mode</button>
     </header>
 
@@ -101,6 +102,37 @@
             }, 500);
         }, 4000);
     }
+        
+        // --- 4. EMERGENCY CLEAR LOGIC (PANIC BUTTON) ---
+    function emergencyClear() {
+        const text = document.getElementById('canvas');
+        const subtitle = document.getElementById('dynamic-subtitle');
+        const btn = document.getElementById('burn-btn');
+        const pattern = document.getElementById('geometric-overlay');
+        
+        // 1. Instant Data Wipe
+        text.value = "";
+        
+        // 2. Instantly reset visual states (in case they were mid-burn)
+        text.classList.remove('dissolving');
+        text.style.visibility = "visible";
+        
+        btn.style.display = "inline-block";
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
+        
+        if (pattern) pattern.classList.remove('show-pattern');
+        
+        // 3. Reset the prompts
+        subtitle.innerText = "Canvas cleared. You are safe.";
+        subtitle.style.opacity = "1";
+        subtitle.style.marginTop = "0px";
+        subtitle.style.fontSize = "16px";
+        
+        // Reset the CBT trigger so it can happen again
+        somaticTriggered = false; 
+    }
+        
     </script>   
 </body>
 </html>
