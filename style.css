@@ -80,3 +80,52 @@ textarea:focus {
 .show-pattern {
     opacity: 0.2 !important;
 }
+/* --- TOP BAR & DISCREET TOGGLE --- */
+#top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 25px;
+    box-sizing: border-box;
+}
+
+#discreet-btn {
+    background: none;
+    border: 1px solid #444;
+    color: #888;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+/* --- DISCREET MODE ACTIVE STATE --- */
+body.discreet-mode {
+    background-color: #000000;
+}
+
+/* Dim all the UI elements */
+body.discreet-mode h1, 
+body.discreet-mode .subtitle, 
+body.discreet-mode #burn-btn, 
+body.discreet-mode #sos-footer {
+    opacity: 0.05; 
+    transition: opacity 0.5s ease;
+}
+
+/* Make text incredibly dark so only the typer can see it */
+body.discreet-mode textarea {
+    color: #1a1a1a; 
+    background-color: #000000;
+    border-color: #0a0a0a;
+}
+
+body.discreet-mode textarea:focus {
+    color: #2a2a2a; /* Just barely bright enough to read */
+}
+
+/* Smooth fade for the subtitle */
+.subtitle {
+    transition: opacity 1s ease;
+}
