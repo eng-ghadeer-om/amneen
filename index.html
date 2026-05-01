@@ -29,5 +29,35 @@
         <p>Need support? <a href="tel:24441999">Whispers of Serenity (Oman)</a></p>
     </footer>
 
+ <script>
+function initiateBurn() {
+    const text = document.getElementById('canvas');
+    const pattern = document.getElementById('geometric-overlay');
+    const btn = document.getElementById('burn-btn');
+    const title = document.querySelector('h1');
+    const subtitle = document.querySelector('.subtitle');
+
+    // 1. Start the dissolve
+    text.classList.add('dissolving');
+    
+    // 2. Fade in the peace (geometric pattern)
+    pattern.classList.add('show-pattern');
+
+    // 3. Hide UI elements gently
+    btn.style.opacity = '0';
+    title.style.opacity = '0.3';
+    subtitle.innerText = "Breathe in... Breathe out...";
+
+    // 4. THE PRIVACY CLEANSE
+    // After 4 seconds (when animation finishes), wipe the text 
+    // from the browser's memory entirely.
+    setTimeout(() => {
+        text.value = ""; 
+        text.style.display = "none";
+        btn.style.display = "none";
+        subtitle.innerText = "It is gone. You are safe.";
+    }, 4000);
+}
+</script>   
 </body>
 </html>
