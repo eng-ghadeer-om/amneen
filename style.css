@@ -1,3 +1,12 @@
+/* --- INITIAL LOAD ANIMATION --- */
+@keyframes softFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#app-container {
+    animation: softFadeIn 1.5s ease-out forwards;
+}
 body {
     background-color: #121212; /* Deep dark mode */
     color: #e0e0e0;
@@ -7,6 +16,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    transition: background-color 0.5s ease; /* Added smooth fade */
 }
 
 #app-container {
