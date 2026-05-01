@@ -80,13 +80,25 @@ textarea:focus {
 .show-pattern {
     opacity: 0.2 !important;
 }
-/* --- TOP BAR & DISCREET TOGGLE --- */
+
+/* --- TOP BAR & CONTROLS --- */
 #top-bar {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between; /* Puts one button on the left, one on the right */
     padding: 15px 25px;
     box-sizing: border-box;
+}
+
+#panic-btn {
+    background: none;
+    border: 1px solid #5a1a1a; /* Subtle dark red border */
+    color: #b33939; /* Muted red text */
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
 }
 
 #discreet-btn {
@@ -100,6 +112,11 @@ textarea:focus {
     transition: all 0.3s ease;
 }
 
+/* Ensure the panic button also hides during Discreet Mode */
+body.discreet-mode #panic-btn {
+    opacity: 0.05; 
+    transition: opacity 0.5s ease;
+}
 /* --- DISCREET MODE ACTIVE STATE --- */
 body.discreet-mode {
     background-color: #000000;
